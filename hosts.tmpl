@@ -3,7 +3,11 @@
 {{ range $host, $containers := groupByMulti $ "Env.VIRTUAL_HOST" "," }}
     {{ range $container := $containers }}
         {{ if and (ne $currentContainer.ID $container.ID) ($container.Env.VIRTUAL_HOST) }}
-{{ ($currentContainer.Env.FORCE_IP) or "127.0.0.1" }} {{ $host }}
+            {{ if $currentContainer.Env.FORCE_IP }}
+{{ ($currentContainer.Env.FORCE_IP) }} {{ $host }}
+            {{ else }}
+127.0.0.1 {{ $host }}
+            {{ end }}
         {{ end }}
     {{end}}
 {{end}}

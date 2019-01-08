@@ -24,5 +24,7 @@ COPY hosts.tmpl /hosts.tmpl
 
 ENV DOCKER_HOST unix:///tmp/docker.sock
 
+COPY resolv.conf /etc/resolv-override.conf
+
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
 CMD ["forego", "start", "-r"]

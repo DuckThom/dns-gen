@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+    app:
+        build: .
+        container_name: dnsmasq
+        restart: always
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+        cap_add:
+            - NET_ADMIN
+        networks:
+            dnsmasq:
+                ipv4_address: 172.200.200.2
+
+networks:
+    dnsmasq:
+        ipam:
+            driver: default
+            config:
+                - subnet: "172.200.200.0/24"
